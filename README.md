@@ -2,7 +2,7 @@
 
 ## Install
 ```
-composer install nataniel/bsxprinter
+composer require nataniel/bsxprinter
 ```
 
 ## Create single Receipt
