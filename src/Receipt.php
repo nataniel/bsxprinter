@@ -56,11 +56,12 @@ class Receipt
      * @param  float $price
      * @param  int $quantity
      * @param  int $vat
+     * @param  int
      * @return $this
      */
-    public function addItem($name, $price, $quantity, $vat)
+    public function addItem($name, $price, $quantity, $vat, ?int $discountPercent = null)
     {
-        $this->items[] = new Receipt\Item($name, $price, $quantity, $vat);
+        $this->items[] = new Receipt\Item($name, $price, $quantity, $vat, $discountPercent);
         return $this;
     }
 
@@ -71,7 +72,7 @@ class Receipt
     {
         $total = 0.0;
         foreach ($this->items as $item) {
-            $total += $item->getAmount();
+            $total += $item->getLineAmount();
         }
 
         return $total;
