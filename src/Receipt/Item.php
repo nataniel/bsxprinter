@@ -3,7 +3,7 @@ namespace Nataniel\BsxPrinter\Receipt;
 
 class Item
 {
-    const DISCOUNT_TYPE = 1;
+    const DISCOUNT_TYPE = 0;
 
     protected $name, $price, $quantity, $vat, $discountPercent;
 
@@ -58,7 +58,7 @@ class Item
 
     public function getUnitPrice()
     {
-        return round($this->price * (100 - $this->discountPercent) / 100, 2);
+        return $this->getLineAmount() / $this->quantity;
     }
 
     /**
@@ -68,10 +68,18 @@ class Item
     {
         $root = new \SimpleXMLElement('<item></item>');
         $root->addAttribute('name', $this->name);
-        $root->addAttribute('price', sprintf('%.2f', $this->price));
-        $root->addAttribute('quantity', $this->quantity);
         $root->addAttribute('vatrate', $this->vat);
-        $root->addAttribute('total', sprintf('%.2f', $this->getLineAmount()));
+        $root->addAttribute('quantity', $this->quantity);
+
+        $root->addAttribute('price', $this->price);
+        if ($this->discountPercent > 0) {
+            $root->addAttribute('discount', 1);
+            $root->addAttribute('discountvalueproc', $this->discountPercent);
+            $root->addAttribute('total', $this->getLineAmount());
+        }
+
+        # $root->addAttribute('price', sprintf('%.2f', $this->getUnitPrice()));
+        # $root->addAttribute('total', sprintf('%.2f', $this->getLineAmount()));
         return $root;
     }
 }
