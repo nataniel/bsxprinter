@@ -53,8 +53,12 @@ class Item
      */
     public function getLineAmount()
     {
-        # this is apparenly how NAV rounds
-        return floor($this->price * $this->quantity * (100 - $this->discountPercent)) / 100;
+        return round($this->price * $this->quantity * (100 - $this->discountPercent) / 100,2);
+    }
+
+    public function getUnitPrice()
+    {
+        return round($this->price * (100 - $this->discountPercent) / 100, 2);
     }
 
     /**
@@ -68,11 +72,6 @@ class Item
         $root->addAttribute('quantity', $this->quantity);
         $root->addAttribute('vatrate', $this->vat);
         $root->addAttribute('total', sprintf('%.2f', $this->getLineAmount()));
-        if ($this->discountPercent > 0) {
-            $root->addAttribute('discount', self::DISCOUNT_TYPE);
-            $root->addAttribute('discountvalueproc', sprintf('%.2f', $this->discountPercent));
-        }
-
         return $root;
     }
 }
