@@ -53,12 +53,12 @@ class Item
      */
     public function getLineAmount()
     {
-        return round($this->price * $this->quantity * (100 - $this->discountPercent) / 100,2);
+        return round(floor($this->price * $this->quantity * (100 - $this->discountPercent)) / 100,2);
     }
 
-    public function getUnitPrice()
+    public function getDiscountValue()
     {
-        return $this->getLineAmount() / $this->quantity;
+        return $this->price * $this->quantity - $this->getLineAmount();
     }
 
     /**
@@ -74,7 +74,8 @@ class Item
         $root->addAttribute('price', $this->price);
         if ($this->discountPercent > 0) {
             $root->addAttribute('discount', 1);
-            $root->addAttribute('discountvalueproc', $this->discountPercent);
+            $root->addAttribute('discountvalue', $this->getDiscountValue());
+            $root->addAttribute('discountname', $this->discountPercent . '%');
             $root->addAttribute('total', $this->getLineAmount());
         }
 
