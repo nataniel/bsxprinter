@@ -53,7 +53,8 @@ class Item
      */
     public function getLineAmount()
     {
-        return $this->price * $this->quantity * (100 - $this->discountPercent) / 100;
+        # this is apparenly how NAV rounds
+        return floor($this->price * $this->quantity * (100 - $this->discountPercent)) / 100;
     }
 
     /**
