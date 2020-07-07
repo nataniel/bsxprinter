@@ -72,9 +72,11 @@ class Receipt
     {
         $total = 0.0;
         foreach ($this->items as $item) {
+            # echo $item->getLineAmount() . "<br />";
             $total += $item->getLineAmount();
         }
 
+        # echo $total; exit();
         return $total;
     }
 

@@ -50,7 +50,7 @@ class Item
 
     public function getLineAmount(): float
     {
-        return round($this->price * $this->quantity * (100 - $this->discountPercent) / 100, 2);
+        return round(round($this->price * $this->quantity * (100 - $this->discountPercent) - 0.001) / 100, 2);
     }
 
     public function getDiscountValue()
