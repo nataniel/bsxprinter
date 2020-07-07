@@ -92,6 +92,7 @@ class Receipt
 
         $now = new \DateTime('now');
         $root->addAttribute('total', sprintf('%.2f', $this->getTotalAmount()));
+        $root->addAttribute('total2', sprintf($this->getTotalAmount()));
         $root->addAttribute('cash', sprintf('%.2f', $this->getTotalAmount()));
         $root->addAttribute('date', $now->format('Y-m-d'));
 

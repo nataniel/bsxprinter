@@ -48,12 +48,9 @@ class Item
         return $this->vat;
     }
 
-    /**
-     * @return float
-     */
-    public function getLineAmount()
+    public function getLineAmount(): float
     {
-        return round(floor($this->price * $this->quantity * (100 - $this->discountPercent)) / 100,2);
+        return round($this->price * $this->quantity * (100 - $this->discountPercent) / 100, 2);
     }
 
     public function getDiscountValue()
